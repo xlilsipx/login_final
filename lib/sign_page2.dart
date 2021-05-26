@@ -39,7 +39,7 @@ class _SignInPage2State extends State<SignInPage2> {
             return FlatButton(
               textColor: Theme.of(context).buttonColor,
               onPressed: () async {
-                final User user = _auth.currentUser;
+                final User user = FirebaseAuth.instance.currentUser;
                 if (user == null) {
                   Scaffold.of(context).showSnackBar(const SnackBar(
                     content: Text('No one has signed in.'),
