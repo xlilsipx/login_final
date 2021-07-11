@@ -377,6 +377,7 @@ import 'package:flutter/material.dart';
 import 'login_screenfinal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:login_final/interest_page.dart';
 
 //void main() => runApp(MyApp());
 void main() async {
@@ -392,7 +393,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Login UI',
       debugShowCheckedModeBanner: false,
-      home: LoginScreenFinal(),
+      home: LoginScreenFinal(),//InterestPage(), //
     );
   }
 }

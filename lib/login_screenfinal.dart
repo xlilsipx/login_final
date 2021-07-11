@@ -40,6 +40,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
         return;
       } else{
         _user = googleUser;
+
       }
       //_user = googleUser; // besser wenn als else statement geschriben wird?, kann else weglassen
 
@@ -50,12 +51,13 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
+      print('google nicuuuuuuuu');
 
     } catch (e) {
       print(e.toString());
     }
 
-    //notifyListeners(); siddha hier evtl faul
+    //notifyListeners(); //siddha hier evtl faul
 
   }
 
@@ -73,14 +75,15 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
-          height: 60.0,
+          width: 300.0,
+          height: 50.0,
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             onChanged: (value) {
               email = value;
             },
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.grey,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -88,7 +91,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.grey,
               ),
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
@@ -108,12 +111,13 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
-          height: 60.0,
+          width: 300.0, //TODO: width heigth dumm für verschiedene handies hier noch anpassen
+          height: 50.0,
           child: TextField(
 
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.grey,
               fontFamily: 'OpenSans',
             ),
             onChanged: (value) {
@@ -124,7 +128,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Colors.grey,
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -167,13 +171,17 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
           // );
 
         });
+        setState(() {
+          isLoadingGgl = !isLoadingGgl; //TODO: loading need to stop
+        });
       },
       darkMode: false,
       isLoading: isLoadingGgl,
       style: AuthButtonStyle(
         iconSize: 24.0,
         borderRadius: 8.0,
-        width: 280.0,
+        width: 300.0,
+        height: 40,
       ),
       //buttonType: buttonType;
     );
@@ -191,7 +199,8 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
       style: AuthButtonStyle(
         iconSize: 24.0,
         borderRadius: 8.0,
-        width: 280.0,
+        width: 300.0,
+        height: 40,
       ),
       //buttonType: buttonType;
     );
@@ -202,7 +211,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
       onPressed: () {
         setState(() {
           isLoadingFb = !isLoadingFb;
-          _fblogin();
+          _fbLogin();
 
           Navigator.push(
             context,
@@ -224,7 +233,8 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
       style: AuthButtonStyle(
         iconSize: 24.0,
         borderRadius: 8.0,
-        width: 280.0,
+        width: 300.0,
+        height: 40,
       ),
       //buttonType: buttonType;
     );
@@ -262,7 +272,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.lightBlueAccent
+        color: kLogInButtonColor,
       ),
       child: TextButton(
         onPressed: () async {
@@ -286,6 +296,42 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
 
         child: Text(
           'Log In',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _emailRegisterButton() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: kRegisterButtonColor,
+      ),
+      child: TextButton(
+        onPressed: () async {
+          setState(() {
+            //showSpinner = true; siddha
+          });
+          try {
+            final newUser = await _auth.createUserWithEmailAndPassword(
+                email: email, password: password);
+            // if (newUser != null) {
+            //   Navigator.pushNamed(context, ChatScreen.id);
+            // } //siddha
+
+            setState(() {
+             // showSpinner = false; siddha
+            });
+          } catch (e) {
+            print(e);
+          }
+        },
+
+        child: Text(
+          'Register',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -335,7 +381,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
   }
 
 
-  Future<void> _fblogin() async {
+  Future<void> _fbLogin() async {
     final LoginResult result = await FacebookAuth.instance.login(); // by the fault we request the email and the public profile
 
     // loginBehavior is only supported for Android devices, for ios it will be ignored
@@ -348,6 +394,7 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
 
     if (result.status == LoginStatus.success) {
       _accessToken = result.accessToken;
+      print('nicccceeeee');
       _printCredentials();
       // get the user data
       // by default we get the userId, email,name and picture
@@ -375,51 +422,69 @@ class _LoginScreenFinalState extends State<LoginScreenFinal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff170333),
         appBar: AppBar(
-          title: const Text('Facebook Auth Example'),
+          backgroundColor: Color(0xff170333),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0),
                     child: Text(
                       "Let's get Started",
-                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: kTextSectionColor),
                     ),
                   ),
                 ),
                 SizedBox(height: 50),
                 _buildGoogleLoginButton(),
+                SizedBox(height: 10),
                 _buildFacebookLoginButton(),
+                SizedBox(height: 10),
                 _buildAppleLoginButton(),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
 
-                SizedBox(height: 10),
-
-                SizedBox(height: 10),
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0),
                     child: Text(
                       "OR",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kTextSectionColor),
                     ),
                   ),
                 ),
                 _buildEmailTF(),
                 _buildPasswordTF(),
-                _buildForgotPasswordBtn(),
-                _emailLogInButton(),
-                _buildRememberMeCheckbox(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildRememberMeCheckbox(),
+                    _buildForgotPasswordBtn(),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget> [
+                    _emailLogInButton(),
+                    SizedBox(width: 50,),
+                    _emailRegisterButton(),
+                  ],
+                ),
+
 
               ],
             ),

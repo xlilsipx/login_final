@@ -17,18 +17,18 @@ const kTextFieldDecoration = InputDecoration(
 );
 
 final kHintTextStyle = TextStyle(
-  color: Colors.white54,
+  color: Colors.grey,
   fontFamily: 'OpenSans',
 );
 
 final kLabelStyle = TextStyle(
-  color: Colors.black,
+  color: Color(0xffEBF3FF),
   fontWeight: FontWeight.bold,
   fontFamily: 'OpenSans',
 );
 
 final kBoxDecorationStyle = BoxDecoration(
-  color: Color(0xFF6CA8F1),
+  color: Color(0xffEBF3FF),
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: [
     BoxShadow(
@@ -38,3 +38,17 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final kElevatedButtonActivityStyleInactive = ButtonStyle(
+  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+);
+
+final kElevatedButtonActivityStyleActive = ButtonStyle(
+  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
+  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+);
+
+final kTextSectionColor = Color(0xffEBF3FF);
+final kRegisterButtonColor = Color(0xffD6317D);
+final kLogInButtonColor = Color(0xff67E3DA);
