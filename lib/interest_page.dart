@@ -52,69 +52,77 @@ class _InterestPageState extends State<InterestPage> {
 
 
 
-  var nameActivityList = <String>[];
-  List<Widget> buttonsListUp = <Widget>[];
-  List<Widget> buttonsListDown = <Widget>[];
-  List<Widget> testList = <Widget>[
-    Text('some activiwty',
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 20,
-    ),),
-    Text('some activity'),
-    Text('some activity'),
-    Text('some activity'),
-    Text('some activity'),
-    Text('sssome activity'),
-  ];
 
-  List<String> testList2 = <String>[
-    'some activity',
-    'some activity',
-    'some activity',
-    'some activity',
-  ];
 
-  //int lenLs = testList2.length;
-  List<bool> _isSelected = List.generate(6, (_) => false);//siddhasss
+  List<String> activityNameList1 = <String>[
+    'some activity1',
+    'some activity1',
+    'some activity1',
+    'some activity1',
+  ];
+  List<bool> _isSelected1 = List.generate(4, (_) => false);
+
+  List<String> activityNameList2 = <String>[
+    'some activity2',
+    'some activity2',
+    'some activity2',
+    'some activity2',
+  ];
+  List<bool> _isSelected2 = List.generate(4, (_) => false);
+
+  List<String> activityNameList3 = <String>[
+    'some activity3',
+    'some activity3',
+    'some activity3',
+    'some activity3',
+  ];
+  List<bool> _isSelected3 = List.generate(4, (_) => false);
+
+  List<String> activityNameList4 = <String>[
+    'some activity4',
+    'some activity4',
+    'some activity4',
+    'some activity4',
+  ];
+  List<bool> _isSelected4 = List.generate(4, (_) => false);
 
   //add all hobbies accordingly and make more lists above
-  void initState() {
-    super.initState();
-    nameActivityList.add('activity1');
-    nameActivityList.add('activity1');
-  }
+  // void initState() {
+  //   super.initState();
+  //   nameActivityList.add('activity1');
+  //   nameActivityList.add('activity1');
+  // }
 
 
-  Widget _myListView(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 1.0),
-          color: Colors.tealAccent,
-          child: Text('$index'),
-        );
-      },
-    );
-  }
+  // Widget _myListView(BuildContext context) {
+  //   return ListView.builder(
+  //     scrollDirection: Axis.horizontal,
+  //     itemBuilder: (context, index) {
+  //       return Container(
+  //         margin: const EdgeInsets.symmetric(horizontal: 1.0),
+  //         color: Colors.tealAccent,
+  //         child: Text('$index'),
+  //       );
+  //     },
+  //   );
+  // }
 
-  List<Widget> _buildButtonsListWithActivitiesUp () {
-    for (int i=0; i < nameActivityList.length; i++) {
-      buttonsListUp.add(_buildInterestCard(nameActivityList[i]));
-    }
-    return buttonsListUp;
-  }
-  List<Widget> _buildButtonsListWithActivitiesDown () {
-    for (int i=0; i < nameActivityList.length; i++) {
-      buttonsListDown.add(_buildInterestCard(nameActivityList[i]));
-    }
-   buttonsListDown.insert(0, SizedBox(width: 50,),);
-    return buttonsListDown;
-  }
+  // List<Widget> _buildButtonsListWithActivitiesUp () {
+  //   for (int i=0; i < nameActivityList.length; i++) {
+  //     buttonsListUp.add(_buildInterestCard(nameActivityList[i]));
+  //   }
+  //   return buttonsListUp;
+  // }
+  // List<Widget> _buildButtonsListWithActivitiesDown () {
+  //   for (int i=0; i < nameActivityList.length; i++) {
+  //     buttonsListDown.add(_buildInterestCard(nameActivityList[i]));
+  //   }
+  //  buttonsListDown.insert(0, SizedBox(width: 50,),);
+  //   return buttonsListDown;
+  // }
 
-  List<bool> isSelected = [false, false, false, false,];
-  List<IconData> iconList = [Icons.ac_unit, Icons.call, Icons.cake,];
+  // List<bool> _isSelected = [false, false, false, false,];
+
 
   // Widget ActivityFinal() {
   //   return Container(
@@ -149,28 +157,28 @@ class _InterestPageState extends State<InterestPage> {
   // }
 
 
-  Widget _buildInterestCard2() {
+  Widget _buildInterestCard2(List activityName, List _isSelected) {
     return Container(
       child: Row(
-        children: List.generate(isSelected.length, (index) {
+        children: List.generate(_isSelected.length, (index) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
                   for (int indexBtn = 0;
-                  indexBtn < isSelected.length;
+                  indexBtn < _isSelected.length;
                   indexBtn++) {
                     if (indexBtn == index) {
-                      isSelected[indexBtn] = !isSelected[indexBtn];
+                      _isSelected[indexBtn] = !_isSelected[indexBtn];
                     }
                   }
                 });
               },
               child: Text(
-                testList2[index],
+                activityName[index],
               ),
-              style: isSelected[index] ? kElevatedButtonActivityStyleActive : kElevatedButtonActivityStyleInactive,
+              style: _isSelected[index] ? kElevatedButtonActivityStyleActive : kElevatedButtonActivityStyleInactive,
             ),
           );
         },
@@ -237,24 +245,31 @@ class _InterestPageState extends State<InterestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('interests'),
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      "Deine Dummen Hobbies",
-                      style:
-                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        "Tap your interests to \nfind tailored \nactivities",
+                        style:
+                            TextStyle(fontSize: 30,),
+                      ),
                     ),
                   ),
                 ),
@@ -263,9 +278,11 @@ class _InterestPageState extends State<InterestPage> {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      "Hobby gruppe 1",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    child: Center(
+                      child: Text(
+                        "Hobby gruppe 1",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -276,40 +293,28 @@ class _InterestPageState extends State<InterestPage> {
                         scrollDirection: Axis.horizontal,
                         child: Column(
                           children: <Widget>[
-                            _buildInterestCard2(),
+                            _buildInterestCard2(activityNameList1,_isSelected1),
                             Row(
                               children: [
                                 SizedBox(width: 40),
-                                _buildInterestCard2(),
+                                _buildInterestCard2(activityNameList2, _isSelected2),
                               ],
                             ),
-
-                            // Row(
-                            //   children: _buildButtonsListWithActivitiesUp(),
-                            // ),
-
-                            // Row(
-                            //   children: _buildButtonsListWithActivitiesDown(),
-                            // ),
-                            // ListView.builder(itemBuilder: (context, index) {
-                            //   return ListTile(
-                            //     title: Text(''),
-                            //   )
-                            // })
                           ],
                         ),
-                      )
-
-
+                      ),
+                      SizedBox(height: 20,),
                     ]
                   ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      "Hobby gruppe 2",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    child: Center(
+                      child: Text(
+                        "Hobby gruppe 2",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
@@ -320,46 +325,64 @@ class _InterestPageState extends State<InterestPage> {
                         scrollDirection: Axis.horizontal,
                         child: Column(
                           children: <Widget>[
+                            _buildInterestCard2(activityNameList3, _isSelected3),
                             Row(
                               children: [
-                                _buildInterestCard('activity32q1'),
-                                _buildInterestCard('activity1e'),
-                                _buildInterestCard('activity31'),
-                                _buildInterestCard('activity15'),
-                                _buildInterestCard('activity16'),
-                                _buildInterestCard('activity32q1'),
-                                _buildInterestCard('activity1e'),
-                                _buildInterestCard('activity31'),
-                                _buildInterestCard('activity15'),
-                                _buildInterestCard('activity16'),
+                                SizedBox(width: 40),
+                                _buildInterestCard2(activityNameList4, _isSelected4),
                               ],
                             ),
-
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                    ]
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 20.0),
+                    child: Center(
+                      child: Text(
+                        "Hobby gruppe 3",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                    children: <Widget>[
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: <Widget>[
+                            _buildInterestCard2(activityNameList3, _isSelected3),
                             Row(
                               children: [
-                                const SizedBox(width: 50,),
-                                _buildInterestCard('activity32q1'),
-                                _buildInterestCard('activity1e'),
-                                _buildInterestCard('activity31'),
-                                _buildInterestCard('activity15'),
-                                _buildInterestCard('activity16'),
-                                _buildInterestCard('activity32q1'),
-                                _buildInterestCard('activity1e'),
-                                _buildInterestCard('activity31'),
-                                _buildInterestCard('activity15'),
-                                _buildInterestCard('activity16'),
+                                SizedBox(width: 40),
+                                _buildInterestCard2(activityNameList4, _isSelected4),
                               ],
                             ),
                           ],
                         ),
                       )
-
-
                     ]
                 ),
               ],
             ),
           ),
-        ));
+        ),
+    bottomNavigationBar: Padding(
+      padding: EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () {},
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
+        // color:Colors.blue,
+        // textColor: Colors.white,
+        child: Text('next button')
+      ),
+    ));
   }
 }
