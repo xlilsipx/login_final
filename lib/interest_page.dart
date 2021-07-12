@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:login_final/constants.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 
@@ -44,6 +45,8 @@ class _InterestPageState extends State<InterestPage> {
     );
   }
 
+
+
   //TODO:toggleButton ist hier die Lösung
 
 
@@ -52,8 +55,28 @@ class _InterestPageState extends State<InterestPage> {
   var nameActivityList = <String>[];
   List<Widget> buttonsListUp = <Widget>[];
   List<Widget> buttonsListDown = <Widget>[];
+  List<Widget> testList = <Widget>[
+    Text('some activiwty',
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+    ),),
+    Text('some activity'),
+    Text('some activity'),
+    Text('some activity'),
+    Text('some activity'),
+    Text('sssome activity'),
+  ];
 
-  List<bool> _isSelected = List.generate(2, (_) => false);//siddha
+  List<String> testList2 = <String>[
+    'some activity',
+    'some activity',
+    'some activity',
+    'some activity',
+  ];
+
+  //int lenLs = testList2.length;
+  List<bool> _isSelected = List.generate(6, (_) => false);//siddhasss
 
   //add all hobbies accordingly and make more lists above
   void initState() {
@@ -89,6 +112,122 @@ class _InterestPageState extends State<InterestPage> {
    buttonsListDown.insert(0, SizedBox(width: 50,),);
     return buttonsListDown;
   }
+
+  List<bool> isSelected = [false, false, false, false,];
+  List<IconData> iconList = [Icons.ac_unit, Icons.call, Icons.cake,];
+
+  // Widget ActivityFinal() {
+  //   return Container(
+  //     height: 40,
+  //     color: Colors.white,
+  //     child: GridView.count(
+  //       crossAxisCount: 3,
+  //       childAspectRatio: 1.0,
+  //       padding: const EdgeInsets.all(4.0),
+  //       mainAxisSpacing: 4.0,
+  //       crossAxisSpacing: 4.0,
+  //       children: List.generate(isSelected.length, (index) {
+  //         return ElevatedButton(
+  //             onPressed: () {
+  //               setState(() {
+  //                 for (int indexBtn = 0;
+  //                 indexBtn < isSelected.length;
+  //                 indexBtn++) {
+  //                   if (indexBtn == index) {
+  //                     isSelected[indexBtn] = !isSelected[indexBtn];
+  //                   }
+  //                 }
+  //               });
+  //         },
+  //             child: Text(
+  //               testList2[index],
+  //             ),
+  //           style: isSelected[index] ? kElevatedButtonActivityStyleActive : kElevatedButtonActivityStyleInactive,);
+  //       }),
+  //     ),
+  //   );
+  // }
+
+
+  Widget _buildInterestCard2() {
+    return Container(
+      child: Row(
+        children: List.generate(isSelected.length, (index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  for (int indexBtn = 0;
+                  indexBtn < isSelected.length;
+                  indexBtn++) {
+                    if (indexBtn == index) {
+                      isSelected[indexBtn] = !isSelected[indexBtn];
+                    }
+                  }
+                });
+              },
+              child: Text(
+                testList2[index],
+              ),
+              style: isSelected[index] ? kElevatedButtonActivityStyleActive : kElevatedButtonActivityStyleInactive,
+            ),
+          );
+        },
+        ),
+      ),
+    );
+  }
+
+  // Widget ActivityList() {
+  //   return Ink(
+  //     width: 400,
+  //     height: 20,
+  //     color: Colors.white,
+  //     child: GridView.count(
+  //
+  //      // primary: true,
+  //       crossAxisCount: 3, //set the number of buttons in a row
+  //       crossAxisSpacing: 8, //set the spacing between the buttons
+  //       mainAxisSpacing: 4.0,
+  //       padding: const EdgeInsets.all(4.0),
+  //       childAspectRatio: 1, //set the width-to-height ratio of the button,
+  //       //>1 is a horizontal rectangle
+  //       children: List.generate(isSelected.length, (index) {
+  //         //using inkwell widget ti make button
+  //         return InkWell(
+  //           splashColor: Colors.yellow,
+  //           onTap: () {
+  //             setState(() {
+  //               for (int indexBtn = 0;
+  //               indexBtn < isSelected.length;
+  //               indexBtn++) {
+  //                 if (indexBtn == index) {
+  //                   isSelected[indexBtn] = !isSelected[indexBtn];//true;
+  //                 }
+  //               }
+  //             });
+  //           },
+  //           child: Align(
+  //             alignment: Alignment.centerLeft,
+  //             child: Ink(
+  //               decoration: BoxDecoration(
+  //                 //set the background color of the button when it is selected/ not selected
+  //                 color: isSelected[index] ? Color(0xffD6EAF8) : Colors.blue,
+  //                 // here is where we set the rounded corner
+  //                 borderRadius: BorderRadius.circular(8),
+  //                 //don't forget to set the border,
+  //                 //otherwise there will be no rounded corner
+  //                 border: Border.all(color: Colors.red),
+  //               ),
+  //               child: testList[index],
+  //             ),
+  //           ),
+  //         );
+  //       }),
+  //     ),
+  //   );
+  // }
 
 
 
@@ -137,17 +276,14 @@ class _InterestPageState extends State<InterestPage> {
                         scrollDirection: Axis.horizontal,
                         child: Column(
                           children: <Widget>[
-                            ToggleButtons(children: [
-                              Text('some'),
-                              Icon(Icons.add_location),
-                            ],
-                              isSelected: _isSelected,
-                              onPressed: (int index) {
-                                setState(() {
-                                  _isSelected[index] = !_isSelected[index];
-                                });
-                              },
-                              ),
+                            _buildInterestCard2(),
+                            Row(
+                              children: [
+                                SizedBox(width: 40),
+                                _buildInterestCard2(),
+                              ],
+                            ),
+
                             // Row(
                             //   children: _buildButtonsListWithActivitiesUp(),
                             // ),

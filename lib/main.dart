@@ -393,7 +393,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Login UI',
       debugShowCheckedModeBanner: false,
-      home: LoginScreenFinal(),//InterestPage(), //
+      home: InterestPage(), //LoginScreenFinal(),//
     );
   }
 }
